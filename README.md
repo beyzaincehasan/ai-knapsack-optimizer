@@ -1,52 +1,40 @@
-AI Knapsack Optimizer with Reinforcement Learning
+# AI Knapsack Optimizer with Reinforcement Learning
 
-A comparative study of classical optimization algorithms and Deep Reinforcement Learning (DQN) for solving the Knapsack Problem using both synthetic and real benchmark datasets.
+This project compares classical optimization algorithms and a Deep Reinforcement Learning approach for solving the 0/1 Knapsack Problem.
 
-📌 Project Overview
+## Project Overview
 
-This project focuses on solving the classical 0/1 Knapsack Problem using multiple approaches:
+The implemented methods are:
 
-Dynamic Programming (DP)
-Greedy Algorithm
-Brute Force
-Deep Q-Network (DQN)
+- Dynamic Programming
+- Greedy Algorithm
+- Brute Force
+- Deep Q-Network (DQN)
 
-The main objective is to compare classical optimization techniques with a Reinforcement Learning-based approach and analyze their performance on different problem scales.
+The project uses both synthetic data and real benchmark knapsack datasets.
 
-The project includes:
+## Algorithms
 
-synthetic data experiments
-real benchmark knapsack datasets
-large-scale experiments (n = 1000)
-learning performance visualization
-scalability analysis
-🧠 Algorithms Used
-1. Dynamic Programming (DP)
+### Dynamic Programming
 
-Provides optimal solutions but becomes computationally expensive for large-scale problems.
+Dynamic Programming guarantees the optimal solution but becomes computationally expensive for large capacities.
 
-2. Greedy Algorithm
+### Greedy Algorithm
 
-Very fast heuristic approach based on value/weight ratio.
+The Greedy algorithm selects items according to their value/weight ratio. It is very fast but does not always guarantee the optimal solution.
 
-3. Brute Force
+### Brute Force
 
-Checks all possible combinations.
-Used only for very small datasets due to exponential complexity.
+Brute Force checks all possible item combinations. It is used only for small datasets because of exponential complexity.
 
-4. Deep Q-Network (DQN)
+### Deep Q-Network
 
-A Reinforcement Learning approach where an agent learns to maximize total knapsack value through interaction with the environment.
+DQN is used as a Reinforcement Learning approach. The agent learns whether to select or skip each item based on rewards.
 
-Features:
+## Project Structure
 
-experience replay
-target network
-epsilon-greedy exploration
-reward-based learning
-📂 Project Structure
+```text
 AlgoritmaAnalizi/
-│
 ├── main.py
 ├── experiment.py
 ├── knapsack_algorithms.py
@@ -59,71 +47,72 @@ AlgoritmaAnalizi/
 │       ├── ks_200_0
 │       ├── ks_400_0
 │       └── ks_1000_0
-│
-├── plots/
+├── real_dataset_n_400.png
+├── real_dataset_n_1000.png
 ├── requirements.txt
 └── README.md
-⚙️ Technologies
+
+Technologies
 Python
 PyTorch
 NumPy
 Matplotlib
-Reinforcement Learning (DQN)
-🚀 Installation
+Gymnasium
+Installation
 
 Clone the repository:
-
 git clone https://github.com/beyzaincehasan/ai-knapsack-optimizer.git
 cd ai-knapsack-optimizer
-
-Create virtual environment:
-
+Create a virtual environment:
 python -m venv venv
-
-Activate environment:
-
-Windows
+Activate the virtual environment on Windows:
 venv\Scripts\activate
-
 Install dependencies:
-
 pip install -r requirements.txt
-▶️ Running Experiments
+Running Experiments
 
-Run benchmark dataset experiments:
-
+Run:
 python main.py
-
-Example datasets:
+Example benchmark datasets:
 
 ks_50_0
 ks_100_0
 ks_200_0
 ks_400_0
 ks_1000_0
-📊 Experimental Results
-Real Dataset Results
-n	DP	Greedy	DQN Eval Best	Success Rate
-50	142156	141956	97.85%	
-100	99837	90000	99.66%	
-200	100236	100062	99.27%	
-400	3967180	3966813	98.15%	
-1000	Not Measured	109869	91.83% (Greedy Reference)	
-📈 Key Findings
-Dynamic Programming guarantees optimal solutions but becomes computationally expensive at large scales.
-Greedy algorithm is extremely fast but may fail to find optimal solutions.
-DQN achieved near-optimal performance on large datasets.
-On n = 400, DQN reached approximately 98.15% of the optimal solution.
-On n = 1000, where DP could not be measured due to computational limitations, DQN still achieved 91.83% of the Greedy reference solution.
-📚 Academic Focus
+Experimental Results
+Real Benchmark Dataset Results
+| Dataset   |    n | Capacity |           DP |  Greedy | DQN Eval Best | Success Rate |
+| --------- | ---: | -------: | -----------: | ------: | ------------: | -----------: |
+| ks_50_0   |   50 |        - |       142156 |  141956 |             - |       97.85% |
+| ks_100_0  |  100 |        - |        99837 |   90000 |             - |       99.66% |
+| ks_200_0  |  200 |        - |       100236 |  100062 |             - |       99.27% |
+| ks_400_0  |  400 |  9486367 |      3967180 | 3966813 |       3893964 |       98.15% |
+| ks_1000_0 | 1000 |   100000 | Not measured |  109869 |        100890 |      91.83%* |
+* For ks_1000_0, Dynamic Programming was not measured due to high computational cost. Therefore, the success rate was calculated according to the Greedy result.
 
-This project demonstrates how Reinforcement Learning can be used in combinatorial optimization problems and highlights scalability advantages over classical exact methods.
+Key Findings
+Dynamic Programming produces optimal solutions but becomes expensive for large-scale problems.
+Brute Force is only feasible for very small datasets.
+Greedy is extremely fast but does not guarantee the optimal solution.
+DQN achieved near-optimal results on large benchmark datasets.
+For ks_400_0, DQN reached 98.15% of the optimal DP result.
+For ks_1000_0, DQN reached 91.83% of the Greedy reference result.
+Output Graphs
 
-📖 References
-Sutton & Barto — Reinforcement Learning: An Introduction
-Cormen et al. — Introduction to Algorithms
-Mnih et al. — Human-level control through deep reinforcement learning
-👩‍💻 Authors
+The training process of DQN is saved as graph images, for example:
+
+real_dataset_n_400.png
+real_dataset_n_1000.png
+Academic Focus
+
+This project demonstrates the use of Reinforcement Learning for combinatorial optimization problems. It compares exact, heuristic, and learning-based approaches in terms of solution quality and scalability.
+
+References
+Sutton, R. S., & Barto, A. G. — Reinforcement Learning: An Introduction.
+Cormen, T. H. et al. — Introduction to Algorithms.
+Mnih, V. et al. — Human-level control through deep reinforcement learning.
+Authors
 Beyza İncehasan
 Gaye Kaymak
 
