@@ -82,8 +82,13 @@ def compare_algorithms_from_file(file_path, episodes=1000):
 def run_comparison(traffic, capacity, episodes, title, filename, file_path=None):
     n = len(traffic)
     weights, values = extract_weights_values(traffic)
-
-    dp_result, dp_time = measure_time(knapsack_dp, capacity, weights, values, n)
+    if n <= 400:
+     dp_result, dp_time = measure_time(
+        knapsack_dp, capacity, weights, values, n
+    )
+    else:
+     dp_result, dp_time = None, None
+    
     greedy_result, greedy_time = measure_time(knapsack_greedy, capacity, traffic)
 
     if n <= 18:
@@ -108,7 +113,10 @@ def run_comparison(traffic, capacity, episodes, title, filename, file_path=None)
 
     print(f"n             : {n}")
     print(f"Capacity      : {capacity}")
-    print(f"DP            : {dp_result} | {dp_time:.4f} ms")
+    if dp_result is not None:
+      print(f"DP            : {dp_result} | {dp_time:.4f} ms")
+    else:
+     print("DP            : problem boyutu çok büyük olduğu için ölçülmedi")
     print(f"Greedy        : {greedy_result} | {greedy_time:.4f} ms")
 
     if bf_result is not None:
@@ -120,11 +128,18 @@ def run_comparison(traffic, capacity, episodes, title, filename, file_path=None)
     print(f"DQN Best      : {dqn_best}")
     print(f"DQN Eval Best : {dqn_best_eval}")
     print(f"DQN Eval Avg  : {dqn_avg_eval:.2f}")
-    print(f"DQN Eval Best / DP Başarı: %{(dqn_best_eval / dp_result) * 100:.2f}")
-
+    if dp_result is not None:
+     print(f"DQN Eval Best / DP Başarı: %{(dqn_best_eval / dp_result) * 100:.2f}")
+    else:
+     print("DQN Eval Best / DP Başarı: DP ölçülmediği için hesaplanamadı")
+    if greedy_result is not None:
+     print(f"DQN Eval Best / Greedy Başarı: %{(dqn_best_eval / greedy_result) * 100:.2f}")
     plt.figure(figsize=(10, 5))
     plt.plot(dqn_scores, label="DQN Eğitim Skoru")
-    plt.axhline(y=dp_result, linestyle="--", label="DP Optimal")
+    if dp_result is not None:
+     plt.axhline(y=dp_result, linestyle="--", label="DP Optimal")
+    else:
+     plt.axhline(y=greedy_result, linestyle="--", label="Greedy Reference")
     plt.axhline(y=greedy_result, linestyle=":", label="Greedy")
     plt.xlabel("Episode")
     plt.ylabel("Toplam Değer")
